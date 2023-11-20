@@ -1,0 +1,11 @@
+--- signify.c.orig	2022-05-04 14:38:43.112896627 +0200
++++ signify.c	2022-05-04 14:39:27.502345899 +0200
+@@ -246,7 +246,8 @@
+ 	fd = xopen(filename, O_CREAT|oflags|O_NOFOLLOW|O_WRONLY, mode);
+ 	header = createheader(comment, buf, buflen);
+ 	writeall(fd, header, strlen(header), filename);
+-	freezero(header, strlen(header));
++	explicit_bzero(header, strlen(header));
++	free(header);
+ 	close(fd);
+ }
